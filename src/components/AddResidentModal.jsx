@@ -12,6 +12,7 @@ const AddResidentModal = ({ isOpen, onClose }) => {
     twitter: "",
   });
 
+  const MAX_IMAGE_SIZE_KB = 300;
   const [useUpload, setUseUpload] = useState(false);
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -27,6 +28,37 @@ const AddResidentModal = ({ isOpen, onClose }) => {
     }
   };
 
+
+  const convertToBase64WithWarning = (file) => {
+    return new Promise((resolve, reject) => {
+      if (!file) {
+        reject("No file provided");
+        return;
+      }
+
+      const fileSizeKB = file.size / 1024;
+
+      if (fileSizeKB > MAX_IMAGE_SIZE_KB) {
+        alert(`Image is too large (${Math.round(fileSizeKB)} KB). Max allowed is ${MAX_IMAGE_SIZE_KB} KB.`);
+        reject("File too large");
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+
+      reader.onload = () => {
+        resolve(reader.result);
+      };
+
+      reader.onerror = (error) => {
+        console.error("Base64 conversion failed:", error);
+        reject("Failed to convert image");
+      };
+    });
+  };
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -38,7 +70,7 @@ const AddResidentModal = ({ isOpen, onClose }) => {
 
     let imageSource = "";
     if (useUpload && profileFile) {
-      imageSource = URL.createObjectURL(profileFile);
+      imageSource = await convertToBase64WithWarning(profileFile);
     } else if (!useUpload && profileUrl) {
       imageSource = profileUrl;
     } else {
@@ -85,7 +117,7 @@ const AddResidentModal = ({ isOpen, onClose }) => {
   };
 
   const storeIt = async (data) => {
-    const response = await fetch("https://pteimirxlxgd6lciwpaiowngb40auxgm.lambda-url.eu-north-1.on.aws/", {
+    const response = await fetch("https://o3upfgtghb.execute-api.eu-north-1.amazonaws.com/dev", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
