@@ -93,13 +93,13 @@
 }
 
 .residents-card-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 240px));
-  gap: 24px;
+  display: flex;
   padding: 10px 20px;
-  width: 100%;
+  flex-wrap: wrap;
+  height: max-content;
+  width: 94%;
   margin: 0 auto;
-  align-items: stretch;
+  align-items: center;
 }
 
 .loading-spinner {

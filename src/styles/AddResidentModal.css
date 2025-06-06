@@ -93,7 +93,7 @@ button[type="submit"]:hover {
 
 .input-toggle {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: flex-start;
   margin-bottom: 8px;
   font-size: 0.9rem;
   color: #555;
@@ -104,4 +104,8 @@ button[type="submit"]:hover {
   cursor: pointer;
   align-items: center;
   gap: 6px;
+}
+
+.give-space{
+  margin-left: 16px;
 }

@@ -213,7 +213,7 @@ const AddResidentModal = ({ isOpen, onClose }) => {
               />
               Use Image URL
             </label>
-            <label>
+            <label className="give-space">
               <input
                 type="radio"
                 name="inputType"
