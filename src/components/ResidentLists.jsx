@@ -19,7 +19,7 @@ function ResidentLists() {
 
     try {
       setLoading(true);
-      const response = await fetch("https://pteimirxlxgd6lciwpaiowngb40auxgm.lambda-url.eu-north-1.on.aws/", {
+      const response = await fetch("https://o3upfgtghb.execute-api.eu-north-1.amazonaws.com/dev", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ operation: "get-all" }),
