@@ -37,7 +37,7 @@ function ResidentLists() {
   };
 
   useEffect(() => {
-    // handleFetch();
+    handleFetch();
   }, []);
 
   return (
