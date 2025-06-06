@@ -1,0 +1,135 @@
+.main-residentlists-container {
+  margin: 40px 20px;
+  padding: 10px 20px;
+}
+
+.title {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+.title span {
+  font-size: 2rem;
+}
+
+.title hr {
+  width: 30px;
+  height: 3px;
+  outline: none;
+  border: none;
+  background: #000;
+  border-radius: 5px;
+}
+
+.residents-filter-container {
+  width: 100%;
+  margin: 20px 0px;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.search-wrapper {
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 5px 14px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  max-width: 700px;
+  width: 100%;
+}
+
+.search-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background-color: transparent;
+}
+
+.search-input::placeholder {
+  color: #aaa;
+}
+
+.search-btn {
+  margin-left: 8px;
+  font-size: 1rem;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition: background-color 200ms ease;
+}
+
+.search-btn img {
+  width: 18px;
+  height: auto;
+}
+
+.residents-btn {
+  width: max-content;
+  margin-left: 20px;
+}
+
+.residents-btn button {
+  padding: 10px 12px;
+  border: 1px solid #000;
+  outline: none;
+  border-radius: 10px;
+  color: #fff;
+  background: #000;
+  cursor: pointer;
+  transition: background-color 250ms ease, color 250ms ease, border 250ms ease;
+}
+
+.residents-btn button:hover {
+  background: #fff;
+  color: #000;
+}
+
+.residents-card-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+  padding: 10px 20px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.loading-spinner {
+  width: 60px;
+  height: 60px;
+  border: 6px solid #eee;
+  border-top: 6px solid #000;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 40px auto;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+@media (max-width: 768px) {
+  .residents-mobile-btn {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .main-residentlists-container {
+    margin: 40px 0px;
+    padding: 10px 12px;
+  }
+  .residents-mobile-btn {
+    display: none;
+  }
+}

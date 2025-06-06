@@ -1,0 +1,61 @@
+.main-navbar {
+  width: 100%;
+  height: max-content;
+  padding: 20px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  background: #fff;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border-bottom: 1px solid #eee;
+}
+
+.main-logo {
+  width: max-content;
+  display: flex;
+  align-items: center;
+}
+
+.main-logo img {
+  width: 24px;
+  height: auto;
+  margin-right: 10px;
+}
+
+.residents-btn {
+  width: max-content;
+}
+
+.residents-btn button {
+  padding: 10px 12px;
+  border: 1px solid #000;
+  outline: none;
+  border-radius: 10px;
+  color: #fff;
+  background: #000;
+  cursor: pointer;
+  transition: background-color 250ms ease, color 250ms ease, border 250ms ease;
+}
+
+.residents-btn button:hover {
+  background: #fff;
+  color: #000;
+}
+
+/* Footer Style */
+.main-footer {
+  margin: 20px 40px;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 480px) {
+  .main-navbar {
+    padding: 10px 12px;
+  }
+}

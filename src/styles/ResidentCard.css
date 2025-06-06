@@ -1,0 +1,51 @@
+.resident-card {
+  background-color: #fff;
+  padding: 10px 12px;
+  border-radius: 16px;
+  text-align: center;
+  width: 220px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.6s ease, transform 0.6s ease;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.resident-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.resident-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.profile-img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 12px;
+}
+
+.resident-name {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.resident-role {
+  margin: 6px 0 12px;
+  font-size: 0.95rem;
+  color: #555;
+}
+
+.social-icons a {
+  margin: 0 8px;
+  color: #555;
+  font-size: 1.2rem;
+  transition: color 0.2s;
+}
+
+.social-icons a:hover {
+  color: #0077b5;
+}
