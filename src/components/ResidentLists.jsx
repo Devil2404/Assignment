@@ -11,6 +11,7 @@ import {
 function ResidentLists() {
   const [state, dispatch] = useResidentController();
   const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
   const didFetch = useRef(false);
 
   const handleFetch = async () => {
@@ -56,6 +57,8 @@ function ResidentLists() {
             type="text"
             placeholder="Search residents..."
             className="search-input"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
           />
           <button className="search-btn">
             <img src={Search} alt="" />
@@ -70,18 +73,34 @@ function ResidentLists() {
         {loading ? (
           <div className="loading-spinner"></div>
         ) : (
-          state.residents.map((resident) => (
-            <ResidentCard
-              key={resident.id}
-              name={`${resident.first_name} ${resident.last_name}`}
-              role={resident.role}
-              image={resident.profile_url}
-              linkedin={resident.linkedin_url}
-              twitter={resident.twitter_url}
-            />
-          ))
+          <>
+            {state.residents.map((resident) => {
+              const fullName = `${resident.first_name} ${resident.last_name}`.toLowerCase();
+              const isMatch = fullName.includes(searchQuery.toLowerCase());
+              return (
+                <div key={resident.id} className={isMatch ? "" : "hide"}>
+                  <ResidentCard
+                    name={`${resident.first_name} ${resident.last_name}`}
+                    role={resident.role}
+                    image={resident.profile_url}
+                    linkedin={resident.linkedin_url}
+                    twitter={resident.twitter_url}
+                  />
+                </div>
+              );
+            })}
+
+            {/* Show no-results message only if no cards match */}
+            {state.residents.filter((resident) => {
+              const fullName = `${resident.first_name} ${resident.last_name}`.toLowerCase();
+              return fullName.includes(searchQuery.toLowerCase());
+            }).length === 0 && (
+                <p className="no-results">No matching residents found.</p>
+              )}
+          </>
         )}
       </div>
+      
     </div>
   );
 }
