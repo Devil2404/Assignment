@@ -13,6 +13,9 @@ function ResidentLists() {
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const didFetch = useRef(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const residentsPerPage = 10;
+
 
   const handleFetch = async () => {
     if (didFetch.current) return;
@@ -39,6 +42,18 @@ function ResidentLists() {
       setLoading(false);
     }
   };
+
+  const filteredResidents = state.residents.filter((resident) => {
+    const fullName = `${resident.first_name} ${resident.last_name}`.toLowerCase();
+    return fullName.includes(searchQuery.toLowerCase());
+  });
+
+  const indexOfLastResident = currentPage * residentsPerPage;
+  const indexOfFirstResident = indexOfLastResident - residentsPerPage;
+  const currentResidents = filteredResidents.slice(indexOfFirstResident, indexOfLastResident);
+
+  const totalPages = Math.ceil(filteredResidents.length / residentsPerPage);
+
 
   useEffect(() => {
     handleFetch();
@@ -69,7 +84,7 @@ function ResidentLists() {
         </div>
       </div>
 
-      <div className="residents-card-container">
+      <div className={`residents-card-container ${loading ? "loading" : ""}`}>
         {loading ? (
           <div className="loading-spinner"></div>
         ) : (
@@ -78,7 +93,16 @@ function ResidentLists() {
               const fullName = `${resident.first_name} ${resident.last_name}`.toLowerCase();
               const isMatch = fullName.includes(searchQuery.toLowerCase());
               return (
-                <div key={resident.id} className={isMatch ? "" : "hide"}>
+                <div
+                  key={resident.id}
+                  className={
+                    isMatch &&
+                      filteredResidents.indexOf(resident) >= indexOfFirstResident &&
+                      filteredResidents.indexOf(resident) < indexOfLastResident
+                      ? ""
+                      : "hide"
+                  }
+                >
                   <ResidentCard
                     name={`${resident.first_name} ${resident.last_name}`}
                     role={resident.role}
@@ -90,17 +114,29 @@ function ResidentLists() {
               );
             })}
 
-            {/* Show no-results message only if no cards match */}
-            {state.residents.filter((resident) => {
-              const fullName = `${resident.first_name} ${resident.last_name}`.toLowerCase();
-              return fullName.includes(searchQuery.toLowerCase());
-            }).length === 0 && (
-                <p className="no-results">No matching residents found.</p>
-              )}
+            {filteredResidents.length === 0 && (
+              <p className="no-results">No matching residents found.</p>
+            )}
           </>
         )}
       </div>
-      
+
+      {!loading && filteredResidents.length > residentsPerPage && (
+        <div className="pagination-container">
+          {Array.from({ length: totalPages }, (_, i) => (
+            <button
+              key={i}
+              className={`pagination-btn ${currentPage === i + 1 ? "active" : ""}`}
+              onClick={() => setCurrentPage(i + 1)}
+            >
+              {i + 1}
+            </button>
+          ))}
+        </div>
+      )}
+
+
+
     </div>
   );
 }

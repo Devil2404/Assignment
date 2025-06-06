@@ -1,5 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import "../styles/AddResidentModal.css";
+import {
+  useResidentController,
+  setResidents,
+  setPopupOpen,
+} from "../context/ResidentContext";
 
 const AddResidentModal = ({ isOpen, onClose }) => {
   const [formData, setFormData] = useState({
@@ -11,12 +16,40 @@ const AddResidentModal = ({ isOpen, onClose }) => {
     linkedin: "",
     twitter: "",
   });
+  const [state, dispatch] = useResidentController();
 
   const MAX_IMAGE_SIZE_KB = 300;
   const [useUpload, setUseUpload] = useState(false);
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState(null);
+  const didFetch = useRef(false);
+
+  const handleFetch = async () => {
+    if (didFetch.current) return;
+    didFetch.current = true;
+
+    try {
+      setLoading(true);
+      const response = await fetch("https://o3upfgtghb.execute-api.eu-north-1.amazonaws.com/dev", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ operation: "get-all" }),
+      });
+
+
+      const result = await response.json();
+      const res = JSON.parse(result.body);
+
+      if (res?.data) {
+        setResidents(dispatch, res.data);
+      }
+    } catch (err) {
+      console.error("Failed to fetch residents:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
 
   const handleChange = (e) => {
@@ -106,6 +139,7 @@ const AddResidentModal = ({ isOpen, onClose }) => {
       setTimeout(() => {
         setSubmitted(false);
         onClose();
+        handleFetch()
       }, 1500);
     } catch (error) {
       setError(error.message);
