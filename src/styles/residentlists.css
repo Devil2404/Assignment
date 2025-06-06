@@ -183,6 +183,9 @@
   .residents-mobile-btn {
     display: none;
   }
+  .residents-card-container{
+    width: 100%;
+  }
 }
 
 @media (max-width: 480px) {
@@ -194,6 +197,7 @@
   .residents-card-container {
     display: flex;
     flex-wrap: wrap;
+    width: 100%;
     align-items: center;
     justify-content: center;
   }
